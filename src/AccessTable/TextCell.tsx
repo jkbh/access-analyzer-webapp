@@ -1,19 +1,19 @@
 type TextCellProps = {
-  key: string;
+  keyName: string;
   content: string | number;
 };
 
-const TextCell = ({ key, content }: TextCellProps) => {
+const TextCell = ({ keyName, content }: TextCellProps) => {
   switch (typeof content) {
     case "number":
       return (
-        <td key={key} className="border-1 p-2 text-right text-3xl">
+        <td key={keyName} className="border-1 p-2 text-right text-3xl">
           {content}
         </td>
       );
     case "string":
       return (
-        <td key={key} className="border-1 p-2 text-left text-3xl">
+        <td key={keyName} className="border-1 p-2 text-left text-3xl">
           {content}
         </td>
       );

@@ -21,7 +21,7 @@ export const AccessAnalyzer = () => {
   const userColumns: ColumnDef<User, string>[] = ["id", "name"].map((name) => ({
     header: name,
     accessorKey: name,
-    cell: (cell) => <TextCell key={name} content={cell.getValue()} />,
+    cell: (cell) => <TextCell keyName={name} content={cell.getValue()} />,
   }));
 
   const groups = Array.from(new Set(data.flatMap((u) => u.groups)));
