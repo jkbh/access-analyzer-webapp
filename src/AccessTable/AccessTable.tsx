@@ -76,11 +76,11 @@ export const AccessAnalyzer = () => {
         <tbody>
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
-              {row
-                .getVisibleCells()
-                .map((cell) =>
-                  flexRender(cell.column.columnDef.cell, cell.getContext()),
-                )}
+              {row.getVisibleCells().map((cell) => (
+                <React.Fragment key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </React.Fragment>
+              ))}
             </tr>
           ))}
         </tbody>
