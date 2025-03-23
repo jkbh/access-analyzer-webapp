@@ -18,9 +18,11 @@ export const AccessAnalyzer = () => {
 
   const roles = calculateAllRoles(data);
 
-  const userColumns: ColumnDef<User, string>[] = ["id", "name"].map((name) => ({
+  const userColumns: ColumnDef<User, string>[] = ["Id", "Name"].map((name) => ({
+    id: name.toLowerCase(),
     header: name,
-    accessorKey: name,
+    accessorKey: name.toLowerCase(),
+    enablePinning: true,
     cell: (cell) => <TextCell keyName={name} content={cell.getValue()} />,
   }));
 
@@ -48,6 +50,12 @@ export const AccessAnalyzer = () => {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    enableColumnPinning: true,
+    initialState: {
+      columnPinning: {
+        left: ["id", "name"],
+      },
+    },
   });
 
   return (
