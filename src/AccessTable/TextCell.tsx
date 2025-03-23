@@ -7,15 +7,15 @@ const TextCell = ({ keyName, content }: TextCellProps) => {
   switch (typeof content) {
     case "number":
       return (
-        <td key={keyName} className="border-1 p-2 text-right text-3xl">
+        <span key={keyName} className="p-2 text-right">
           {content}
-        </td>
+        </span>
       );
     case "string":
       return (
-        <td key={keyName} className="border-1 p-2 text-left text-3xl">
+        <span key={keyName} className="p-2 text-left">
           {content}
-        </td>
+        </span>
       );
   }
 };

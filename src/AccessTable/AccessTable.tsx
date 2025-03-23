@@ -34,7 +34,6 @@ export const AccessAnalyzer = () => {
       cell: (cell) => {
         return (
           <GroupCell
-            group={group}
             hasAccess={cell.getValue()}
             isSelected={selectedRole?.has(group) ?? false}
           />
@@ -60,7 +59,7 @@ export const AccessAnalyzer = () => {
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="border-1 px-2 text-left align-bottom"
+                  className={`border-x-1 border-b-2 border-gray-200 border-b-black align-bottom ${header.column.getIsPinned() && header.column.getIsLastColumn("left") ? "border-r-2 border-r-black" : ""}`}
                 >
                   {header.isPlaceholder
                     ? null
@@ -77,9 +76,12 @@ export const AccessAnalyzer = () => {
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <React.Fragment key={cell.id}>
+                <td
+                  key={cell.id}
+                  className={`h-12 w-12 border-1 border-gray-200 ${cell.column.getIsPinned() && cell.column.getIsLastColumn("left") ? "border-r-2 border-r-black" : ""}`}
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </React.Fragment>
+                </td>
               ))}
             </tr>
           ))}
