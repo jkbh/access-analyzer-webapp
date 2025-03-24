@@ -73,7 +73,7 @@ export const AccessAnalyzer = () => {
   });
 
   return (
-    <div className="flex gap-4">
+    <div className="grid grid-rows-2 gap-4">
       <table className="border-collapse">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -109,11 +109,11 @@ export const AccessAnalyzer = () => {
           ))}
         </tbody>
       </table>
-      <div className="flex flex-col justify-between gap-2">
+      <div className="pad-2 flex h-fit max-w-full flex-wrap gap-2 align-middle">
         {roles.map((role, i) => (
           <div
             key={i}
-            className="grow cursor-pointer gap-4 rounded-md bg-gray-100 p-2 align-middle text-3xl hover:bg-gray-200"
+            className="cursor-pointer rounded-md bg-gray-100 p-2 align-middle text-3xl hover:bg-gray-200"
             onMouseOver={() => setSelectedRole(role)}
             onMouseOut={() => setSelectedRole(undefined)}
           >
