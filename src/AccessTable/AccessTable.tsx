@@ -10,10 +10,17 @@ import {
 import GroupCell from "./GroupCell";
 import GroupHeader from "./GroupHeader";
 import TextCell from "./TextCell";
-import { User, Role, mockUsers, calculateAllRoles } from "../User";
+// import { User, Role, mockUsers, calculateAllRoles } from "../User";
+import {
+  generateUsers,
+  User,
+  Role,
+  calculateAllRoles,
+  GroupState,
+} from "../generation";
 
 export const AccessAnalyzer = () => {
-  const [data, _setData] = React.useState(() => [...mockUsers]);
+  const [data, _setData] = React.useState(() => generateUsers(10));
   const [selectedRole, setSelectedRole] = React.useState<Role | undefined>();
 
   const roles = calculateAllRoles(data);
@@ -26,17 +33,24 @@ export const AccessAnalyzer = () => {
     cell: (cell) => <TextCell keyName={name} content={cell.getValue()} />,
   }));
 
-  const groups = Array.from(new Set(data.flatMap((u) => u.groups)));
+  const groups = Array.from(
+    new Set(data.flatMap((u) => [...u.groupStates.keys()])),
+  ).sort((a, b) => {
+    return (
+      data.filter((u) => u.groupStates.get(b) === "assigned").length -
+      data.filter((u) => u.groupStates.get(a) === "assigned").length
+    );
+  });
 
-  const groupColumns: AccessorFnColumnDef<User, boolean>[] = groups.map(
+  const groupColumns: AccessorFnColumnDef<User, GroupState>[] = groups.map(
     (group) => ({
       id: group,
       header: () => <GroupHeader header={group} />,
-      accessorFn: (row) => row.groups.includes(group),
+      accessorFn: (row) => row.groupStates.get(group) ?? "not_assigned",
       cell: (cell) => {
         return (
           <GroupCell
-            hasAccess={cell.getValue()}
+            hasAccess={cell.getValue() != "not_assigned"}
             isSelected={selectedRole?.has(group) ?? false}
           />
         );
@@ -103,7 +117,7 @@ export const AccessAnalyzer = () => {
             onMouseOver={() => setSelectedRole(role)}
             onMouseOut={() => setSelectedRole(undefined)}
           >
-            <span>{Array.from(role).join(", ")}</span>
+            <span>{`role ${i}`}</span>
           </div>
         ))}
       </div>
